@@ -45,6 +45,20 @@ namespace UniversityRegistrar.Tests
       //Assert
       Assert.AreEqual(testStudent, result);
     }
+    [TestMethod]
+    public void Delete_DeleletesStudentInDataBase_Students()
+    {
+      Student testStudent = new Student("Jack", "08/11/19");
+      testStudent.Save();
+      Student otherStudent = new Student("Kyle", "07/12/18");
+      otherStudent.Save();
+
+      testStudent.Delete();
+      List<Student> result = Student.GetAll();
+      List<Student> expected = new List<Student>{otherStudent};
+
+      CollectionAssert.AreEqual(expected, result);
+    }
 
   }
 }
