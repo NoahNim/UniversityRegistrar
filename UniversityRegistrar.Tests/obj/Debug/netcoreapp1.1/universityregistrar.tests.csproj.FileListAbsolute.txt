@@ -1,0 +1,13 @@
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.tests.deps.json
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.tests.runtimeconfig.json
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.tests.runtimeconfig.dev.json
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/obj/Debug/netcoreapp1.1/universityregistrar.tests.AssemblyInfo.cs
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.tests.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.tests.pdb
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/bin/Debug/netcoreapp1.1/universityregistrar.pdb
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/obj/Debug/netcoreapp1.1/universityregistrar.tests.dll
+/Users/Guest/Desktop/UniversityRegistrar.Solution/UniversityRegistrar.Tests/obj/Debug/netcoreapp1.1/universityregistrar.tests.pdb
