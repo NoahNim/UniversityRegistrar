@@ -113,6 +113,24 @@ namespace UniversityRegistrar.Models
 
         return newCourse;
     }
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM courses WHERE course_id = @courseId; DELETE FROM course_info WHERE course_id = @CourseId;";
+
+      MySqlParameter courseIdParameter = new MySqlParameter();
+      courseIdParameter.ParameterName = "@CourseId";
+      courseIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(courseIdParameter);
+
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     public static void DeleteAll()
     {
         MySqlConnection conn = DB.Connection();

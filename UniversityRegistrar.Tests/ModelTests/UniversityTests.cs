@@ -87,6 +87,20 @@ namespace UniversityRegistrar.Tests
       //Assert
       Assert.AreEqual(testCourse, result);
     }
+    [TestMethod]
+    public void Delete_DeleletesCourseInDataBase_Coursess()
+    {
+      Course testCourse = new Course("English", "101");
+      testCourse.Save();
+      Course otherCourse = new Course("Science", "200");
+      otherCourse.Save();
+
+      testCourse.Delete();
+      List<Course> result = Course.GetAll();
+      List<Course> expected = new List<Course>{otherCourse};
+
+      CollectionAssert.AreEqual(expected, result);
+    }
 
 
   }
