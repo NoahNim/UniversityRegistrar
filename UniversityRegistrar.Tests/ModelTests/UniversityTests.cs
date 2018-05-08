@@ -101,6 +101,27 @@ namespace UniversityRegistrar.Tests
 
       CollectionAssert.AreEqual(expected, result);
     }
+    [TestMethod]
+    public void GetCourses_ReturnsAllStudentCourses_CourseList()
+    {
+      //Arrange
+      Student testStudent = new Student("Bob", "07/06/20");
+      testStudent.Save();
+
+      Course testCourse1 = new Course("Dog Language", "103");
+      testCourse1.Save();
+
+      Course testCourse2 = new Course("Secret Aliens", "101");
+      testCourse2.Save();
+
+      //Act
+      testStudent.AddCourse(testCourse1);
+      List<Course> result = testStudent.GetCourses();
+      List<Course> testList = new List<Course> {testCourse1};
+
+      //Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
 
 
   }

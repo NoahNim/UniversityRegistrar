@@ -49,8 +49,6 @@ namespace UniversityRegistrar.Models
         date.Value = this._date;
         cmd.Parameters.Add(date);
 
-        // Code to declare, set, and add values to a categoryId SQL parameters has also been removed.
-
         cmd.ExecuteNonQuery();
         _student_id = (int) cmd.LastInsertedId;
         conn.Close();
@@ -72,8 +70,7 @@ namespace UniversityRegistrar.Models
           int studentId = rdr.GetInt32(0);
           string studentName = rdr.GetString(1);
           string studentDate = rdr.GetString(2);
-          // We no longer need to read categoryIds from our items table here.
-          // Constructor below no longer includes a itemCategoryId parameter:
+
           Student newStudent = new Student(studentName, studentDate, studentId);
           allStudents.Add(newStudent);
         }
@@ -83,6 +80,84 @@ namespace UniversityRegistrar.Models
             conn.Dispose();
         }
         return allStudents;
+    }
+    public void AddCourse(Course newCourse)
+    {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"INSERT INTO course_info (student_id, course_id) VALUES (@studentId, @CourseId);";
+
+        MySqlParameter student_id = new MySqlParameter();
+        student_id.ParameterName = "@StudentId";
+        student_id.Value = _student_id;
+        cmd.Parameters.Add(student_id);
+
+        MySqlParameter course_id = new MySqlParameter();
+        course_id.ParameterName = "@CourseId";
+        course_id.Value = newCourse.GetId();
+        cmd.Parameters.Add(course_id);
+
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+    }
+    public List<Course> GetCourses()
+    {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT courses.* FROM students
+        JOIN course_info ON (students.student_id = course_info.student_id)
+        JOIN courses ON(course_info.course_id = courses.course_id)
+        WHERE students.student_id = @StudentId";
+
+        MySqlParameter studentIdParameter = new MySqlParameter();
+        studentIdParameter.ParameterName = "@studentId";
+        studentIdParameter.Value = _student_id;
+        cmd.Parameters.Add(studentIdParameter);
+
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+        List<int> courseIds = new List<int> {};
+        while(rdr.Read())
+        {
+            int courseId = rdr.GetInt32(0);
+            courseIds.Add(courseId);
+        }
+        rdr.Dispose();
+
+        List<Course> courses = new List<Course> {};
+        foreach (int courseId in courseIds)
+        {
+            var courseQuery = conn.CreateCommand() as MySqlCommand;
+            courseQuery.CommandText = @"SELECT * FROM courses WHERE course_id = @CourseId;";
+
+            MySqlParameter courseIdParameter = new MySqlParameter();
+            courseIdParameter.ParameterName = "@CourseId";
+            courseIdParameter.Value = courseId;
+            courseQuery.Parameters.Add(courseIdParameter);
+
+            var courseQueryRdr = courseQuery.ExecuteReader() as MySqlDataReader;
+            while(courseQueryRdr.Read())
+            {
+                int thisCourseId = courseQueryRdr.GetInt32(0);
+                string courseName = courseQueryRdr.GetString(1);
+                string courseNumber = courseQueryRdr.GetString(2);
+                Course foundCourse = new Course(courseName, courseNumber, thisCourseId);
+                courses.Add(foundCourse);
+            }
+            courseQueryRdr.Dispose();
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return courses;
     }
     public static Student Find(int student_id)
     {
@@ -159,7 +234,6 @@ namespace UniversityRegistrar.Models
          Student newStudent = (Student) otherStudent;
          bool idEquality = this.GetId() == newStudent.GetId();
          bool nameEquality = this.GetName() == newStudent.GetName();
-         // We no longer compare Students' categoryIds in a categoryEquality bool here.
          return (idEquality && nameEquality);
        }
     }
