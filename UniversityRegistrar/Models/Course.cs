@@ -17,11 +17,11 @@ namespace UniversityRegistrar.Models
       _courseName = courseName;
       _courseNum = courseNum;
     }
-    public int GetCourseId()
+    public int GetId()
     {
       return _course_id;
     }
-    public string GetCourseName()
+    public string GetName()
     {
       return _courseName;
     }
@@ -35,7 +35,7 @@ namespace UniversityRegistrar.Models
       conn.Open();
 
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"INSERT INTO courses (courseName, courseNum) VALUES (@name, @coursenum);";
+      cmd.CommandText = @"INSERT INTO courses (name, courseNum) VALUES (@name, @coursenum);";
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
@@ -70,15 +70,80 @@ namespace UniversityRegistrar.Models
           string courseNum = rdr.GetString(2);
           // We no longer need to read categoryIds from our items table here.
           // Constructor below no longer includes a itemCategoryId parameter:
-          Course newCourse = new Course(courseName, courseNum, courseIdf);
-          allCourse.Add(newCourse);
+          Course newCourse = new Course(courseName, courseNum, courseId);
+          allCourses.Add(newCourse);
         }
         conn.Close();
         if (conn != null)
         {
             conn.Dispose();
         }
-        return allcourse;
+        return allCourses;
+    }
+    public static Course Find(int course_id)
+    {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM courses WHERE course_id = (@searchId);";
+
+        MySqlParameter searchId = new MySqlParameter();
+        searchId.ParameterName = "@searchId";
+        searchId.Value = course_id;
+        cmd.Parameters.Add(searchId);
+
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        int courseId = 0;
+        string courseName = "";
+        string courseNumber = "";
+
+        while(rdr.Read())
+        {
+          courseId = rdr.GetInt32(0);
+          courseName = rdr.GetString(1);
+          courseNumber = rdr.GetString(2);
+        }
+
+        Course newCourse = new Course(courseName, courseNumber, courseId);
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+
+        return newCourse;
+    }
+    public static void DeleteAll()
+    {
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"DELETE FROM courses;";
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+    }
+    public override bool Equals(System.Object otherCourse)
+    {
+      if (!(otherCourse is Course))
+      {
+        return false;
+      }
+      else
+      {
+         Course newCourse = (Course) otherCourse;
+         bool idEquality = this.GetId() == newCourse.GetId();
+         bool nameEquality = this.GetName() == newCourse.GetName();
+         // We no longer compare Courses' categoryIds in a categoryEquality bool here.
+         return (idEquality && nameEquality);
+       }
+    }
+    public override int GetHashCode()
+    {
+         return this.GetName().GetHashCode();
     }
 
   }

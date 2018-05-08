@@ -17,6 +17,7 @@ namespace UniversityRegistrar.Tests
     public void Dispose()
     {
       Student.DeleteAll();
+      Course.DeleteAll();
     }
     [TestMethod]
     public void Save_StudentSavesToDatabase_Students()
@@ -59,6 +60,34 @@ namespace UniversityRegistrar.Tests
 
       CollectionAssert.AreEqual(expected, result);
     }
+    [TestMethod]
+    public void Save_CourseSavesToDatabase_Courses()
+    {
+      //Arrange
+      Course testCourse = new Course("History Studies", "101");
+      testCourse.Save();
+
+      //Act
+      List<Course> courseResult = Course.GetAll();
+      List<Course> courseList = new List<Course>{testCourse};
+
+      //Assert
+      CollectionAssert.AreEqual(courseList, courseResult);
+    }
+    [TestMethod]
+    public void Find_FindsCourseInDatabase_Courses()
+    {
+      //Arrange
+      Course testCourse = new Course("Math", "105");
+      testCourse.Save();
+
+      //Act
+      Course result = Course.Find(testCourse.GetId());
+
+      //Assert
+      Assert.AreEqual(testCourse, result);
+    }
+
 
   }
 }
