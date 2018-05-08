@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
+using UniversityRegistrar.Models;
 
 namespace UniversityRegistrar.Models
 {
