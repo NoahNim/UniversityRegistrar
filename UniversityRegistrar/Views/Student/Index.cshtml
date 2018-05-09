@@ -9,9 +9,10 @@
     <ul>
       @foreach (var student in Model)
       {
-        <li><a href='/students/@student.GetId()'>@student.GetName()</a></li>
+        <li><a href='/students/@student.GetId()'>@student.GetName() @student.GetDate()</a></li>
       }
     </ul>
-    <button type="button" name="button">Add Student</button>
+    <h4><a href="/students/new"><button type="button" name="button">Add Student</button></a></h4>
+    <h4><a href="/">Return home</a></h4>
   </body>
 </html>

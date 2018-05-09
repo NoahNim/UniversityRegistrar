@@ -13,5 +13,17 @@ namespace UniversityRegistrar.Controllers
             List<Student> allStudents = Student.GetAll();
             return View(allStudents);
         }
+        [HttpGet("/students/new")]
+        public ActionResult CreateForm()
+        {
+            return View();
+        }
+        [HttpPost("/students")]
+        public ActionResult Create()
+        {
+            Student newStudent = new Student(Request.Form["student-name"], Request.Form["student-date"]);
+            newStudent.Save();
+            return RedirectToAction("Success", "Home");
+        }
     }
 }
