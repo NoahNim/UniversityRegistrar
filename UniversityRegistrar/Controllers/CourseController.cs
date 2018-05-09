@@ -46,5 +46,20 @@ namespace UniversityRegistrar.Controllers
             course.AddStudent(student);
             return RedirectToAction("Details",  new { id = courseId });
         }
+        [HttpGet("/courses/{courseId}/delete")]
+        public ActionResult DeleteCourse(int courseId)
+        {
+          Course course = Course.Find(courseId);
+          course.Delete();
+          List<Course> allCourses = Course.GetAll();
+          return View("Index", allCourses);
+        }
+        [HttpGet("/courses/deleteall")]
+        public ActionResult DeleteAll()
+        {
+            Course.DeleteAll();
+            List<Course> allCourses = Course.GetAll();
+            return View("Index", allCourses);
+        }
     }
 }

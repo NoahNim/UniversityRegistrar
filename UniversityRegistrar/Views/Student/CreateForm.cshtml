@@ -3,17 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>University Registrar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   </head>
   <body>
-    <h1>Add a new student</h1>
-    <form action="/students" method="post">
-      <label for="student-name">Student Name:</label>
-      <input id="student-name" name="student-name" type="text">
-      <label for="student-date">Student Date:</label>
-      <input id="student-date" name="student-date" type="text">
-      <button type="submit">Add new student</button>
-    </form>
-    <p><a href="/">Back home</a></p>
-    <p><a href="/students">View all students</a></p>
+    <div class = "container text-center">
+      <h1>Add a new student</h1>
+      <form action="/students" method="post">
+        <label for="student-name">Student Name:</label>
+        <input id="student-name" name="student-name" type="text">
+        <label for="student-date">Student Date:</label>
+        <input id="student-date" name="student-date" type="text">
+        <button type="submit">Add new student</button>
+      </form>
+      <p><a href="/">Back home</a></p>
+      <p><a href="/students">View all students</a></p>
+    </div>
   </body>
 </html>
