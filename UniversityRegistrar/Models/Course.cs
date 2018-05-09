@@ -109,7 +109,7 @@ namespace UniversityRegistrar.Models
         MySqlConnection conn = DB.Connection();
         conn.Open();
         var cmd = conn.CreateCommand() as MySqlCommand;
-        cmd.CommandText = @"SELECT student.* FROM courses
+        cmd.CommandText = @"SELECT students.* FROM courses
             JOIN course_info ON (courses.course_id = course_info.course_id)
             JOIN students ON (course_info.student_id = students.student_id)
             WHERE courses.course_id = @CourseId;";

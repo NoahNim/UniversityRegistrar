@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using UniversityRegistrar.Models;
+using System;
 
 namespace UniversityRegistrar.Controllers
 {
@@ -24,6 +25,26 @@ namespace UniversityRegistrar.Controllers
             Course newCourse = new Course(Request.Form["course-name"], Request.Form["course-num"]);
             newCourse.Save();
             return RedirectToAction("Success", "Home");
+        }
+        [HttpGet("/courses/{id}")]
+        public ActionResult Details(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Course selectedCourse = Course.Find(id);
+            List<Student> courseStudents = selectedCourse.GetStudents();
+            List<Student> allStudents = Student.GetAll();
+            model.Add("selectedCourse", selectedCourse);
+            model.Add("courseStudents", courseStudents);
+            model.Add("allStudents", allStudents);
+            return View(model);
+        }
+        [HttpPost("/courses/{courseId}/students/new")]
+        public ActionResult AddStudent(int courseId)
+        {
+            Course course = Course.Find(courseId);
+            Student student = Student.Find(Int32.Parse(Request.Form["student-id"]));
+            course.AddStudent(student);
+            return RedirectToAction("Details",  new { id = courseId });
         }
     }
 }
