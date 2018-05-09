@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>University Registrar</title>
+  </head>
+  <body>
+    <h1>University Registrar Courses</h1>
+    <ul>
+      @foreach (var course in Model)
+      {
+        <li><a href='/courses/@course.GetId()'>@course.GetName() @course.GetCourseNum()</a></li>
+      }
+    </ul>
+    <button type="button" name="button">Add Course</button>
+  </body>
+</html>

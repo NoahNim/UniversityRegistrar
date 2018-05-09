@@ -5,12 +5,9 @@
     <title>University Registrar</title>
   </head>
   <body>
-    <h1>University Registrar</h1>
-    <ul>
-      @foreach (var student in Model)
-      {
-        <li><a href='/students/@student.GetId()'>@student.GetName()</a></li>
-      }
-    </ul>
+    <h1>University Home</h1>
+      <hr />
+      <h4><a href="/courses/index/">View Courses</a></h4>
+      <h4><a href="/students/index/">View Students</a></h4>
   </body>
 </html>

@@ -10,8 +10,7 @@ namespace UniversityRegistrar.Controllers
         [HttpGet("/")]
         public ActionResult Index()
         {
-            List<Student> allStudents = Student.GetAll();
-            return View(allStudents);
+            return View();
         }
     }
 }
